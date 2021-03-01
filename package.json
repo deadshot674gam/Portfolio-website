@@ -1,0 +1,22 @@
+{
+  "name": "portfolio-website",
+  "version": "1.0.0",
+  "description": "This is my portfolio website",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "nodemon src/app.js run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deadshot674gam/Portfolio-website.git"
+  },
+  "author": "Divyanshu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deadshot674gam/Portfolio-website/issues"
+  },
+  "homepage": "https://github.com/deadshot674gam/Portfolio-website#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}

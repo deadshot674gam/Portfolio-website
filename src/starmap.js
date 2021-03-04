@@ -2,41 +2,31 @@ const request = require('request')
 const fs = require('fs')
 const btoa = require('btoa')
 
-const starmap = ({ latitude, longitude }) => {
+const starmap = ({ latitude, longitude },callback) => {
 
-    const credentials = {
-        appId: "0e9147e7-e413-439d-b99a-7ca8395fd1d5",
-        appSecret: "8a6933d7248961cb2e7588c250ed670878ac84ab0ffdc9d6afba1247b1a9409221cb299a14adf868a1c227290d158281bd147c37fbc416f4ce1239125c017fc09af0f1909d7e58cfaa85d5d0d29a425af8b62a32a0b5aba5226e57d153ca56858d30add7d053ac258fc90ca34275485a"
-    }
-
-    const hash = btoa(`${credentials.appId}:${credentials.appSecret}`);
-    const data = {
-        Authorisation: hash,
+    const options = {
+        method: 'POST',
+        url: 'https://astronomy.p.rapidapi.com/api/v2/studio/star-chart',
+        headers: {
+            'content-type': 'application/json',
+            'x-rapidapi-key': '29c29eb991msh39d09d28b69f783p19852djsn48ea3598d5ed',
+            'x-rapidapi-host': 'astronomy.p.rapidapi.com',
+            useQueryString: true
+        },
         body: {
-            observer: {
-                latitude,
-                longitude,
-                date: "2000-05-01"
-            },
-            view: {
-                type: "constellation",
-                parameters: {
-                    constellation: "ori"
-                }
-            }
+            observer: { date: '2000-05-01', latitude, longitude },
+            style: 'default',
+            view: { parameters: { constellation: 'ori' }, type: 'constellation' }
+        },
+        json: true
+    };
 
+    request(options, function (error, response, body) {
+        if(!error){
+            // console.log(body)
+            callback(body.data.imageUrl)
         }
-    }
-    request({
-        url: 'https://api.astronomyapi.com/api/v2/studio/star-chart',
-        json: data
-    },
-        (error, response) => {
-            if (!error) {
-                console.log(response)
-            }
-        }
-    )
+    });
 }
 
 module.exports = starmap
